@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
 
@@ -7,7 +8,7 @@ import { AuthService } from '../../Services/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerData = {
     name: '',
     email: '',
@@ -15,22 +16,49 @@ export class RegisterComponent {
     passwordConfirmation: ''
   };
 
+  errorMessage: string = '';
+
   constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
-    this.authService.register(this.registerData.name, this.registerData.email, this.registerData.password, this.registerData.passwordConfirmation)
-      .subscribe(
-        response => {
-          console.log('Registro exitoso:', response);
-          this.router.navigate(['/login']);
-        },
-        error => {
-          console.error('Error en el registro:', error);
-          // Aquí puedes manejar el error y mostrar un mensaje al usuario si es necesario
-        }
-      );
+  ngOnInit() {
+    this.resetRegisterData();
   }
+
+  resetRegisterData() {
+    this.registerData.name = '';
+    this.registerData.email = '';
+    this.registerData.password = '';
+    this.registerData.passwordConfirmation = '';
+  }
+
+  onSubmit(form: NgForm) {
+    this.errorMessage = '';
+    if (form.valid) {
+      if (this.registerData.password !== this.registerData.passwordConfirmation) {
+        this.errorMessage = 'Las contraseñas no coinciden.';
+        return;
+      }
+
+      this.authService.register(this.registerData.name, this.registerData.email, this.registerData.password, this.registerData.passwordConfirmation)
+        .subscribe(
+          response => {
+            console.log('Registro exitoso:', response);
+            this.router.navigate(['/login']).then(() => {
+              this.resetRegisterData();
+            });
+          },
+          error => {
+            console.error('Error en el registro:', error);
+            this.errorMessage = 'Error en el registro. Intente nuevamente.';
+          }
+        );
+    } else {
+      this.errorMessage = 'Por favor, complete todos los campos.';
+    }
+  }
+
   goToLogin() {
+    this.resetRegisterData();
     this.router.navigate(['/login']);
   }
 }
