@@ -1,0 +1,24 @@
+<div class="login-container">
+  <div class="left-panel">
+    <img src="assets/supermercadoUbi.avif" alt="Supermercado Logo">
+  </div>
+  <div class="right-panel">
+    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+      <h2>Iniciar Sesión</h2>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" ngModel required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="password" ngModel required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Iniciar Sesión</button>
+      </div>
+    </form>
+    <div class="register-link">
+      <p>¿No tienes una cuenta? <a (click)="goToRegister()" class="register-text">Registrarse</a></p>
+    </div>
+  </div>
+</div>
