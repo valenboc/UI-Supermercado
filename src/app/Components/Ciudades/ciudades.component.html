@@ -1,4 +1,6 @@
+<!-- ciudades.component.html -->
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 <select>
+  <option disabled selected value="">Seleccione una opción</option>
   <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_ciudad">{{ ciudad.Nombre }}</option>
 </select>

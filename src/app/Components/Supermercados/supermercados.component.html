@@ -1,56 +1,48 @@
+<!-- supermercados.component.html -->
+<app-modal *ngIf="isModalOpen" [title]="'Editar Supermercado'" [supermercadoEdit]="supermercadoEdit" (closeModal)="closeModal()" (saveChanges)="submitEditForm($event)">
+</app-modal>
+
+<!-- Listado de Supermercados -->
 <div *ngFor="let supermercado of supermercados | paginate: { itemsPerPage: 6, currentPage: page }" class="row-sesion shadow">
   <img *ngIf="supermercado.Logo" [src]="'assets/' + supermercado.Logo" alt="{{ supermercado.Nombre }} Logo">
-
   <div class="info-container">
     <div class="info">
-      Nombre
-      <br />
+      Nombre<br />
       <span>{{ supermercado.Nombre }}</span>
     </div>
   </div>
-
   <div class="info-container">
     <div class="info">
-      NIT
-      <br />
+      NIT<br />
       <span>{{ supermercado.NIT }}</span>
     </div>
   </div>
-  
   <div class="info-container">
     <div class="info">
-      Dirección
-      <br />
+      Dirección<br />
       <span>{{ supermercado.Direccion }}</span>
     </div>
   </div>
-
   <div class="info-container">
     <div class="info">
-      Ciudad
-      <br />
+      Ciudad<br />
       <span>{{ supermercado.ciudad.Nombre }}</span>
     </div>
   </div>
-
   <div class="info-container">
     <div class="info">
-      Longitud
-      <br />
+      Longitud<br />
       <span>{{ supermercado.Longitud }}</span>
     </div>
   </div>
-
   <div class="info-container">
     <div class="info">
-      Latitud
-      <br />
+      Latitud<br />
       <span>{{ supermercado.Latitud }}</span>
     </div>
   </div>
-  
   <div class="icon-container">
-    <i class="fas fa-edit" (click)="editSupermercado(supermercado)"></i>
+    <i class="fas fa-edit" (click)="openEditModal(supermercado)"></i>
     <i class="fas fa-trash" (click)="deleteSupermercado(supermercado)"></i>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SupermercadosService } from '../../Services/supermercados.service'; // Asegúrate de que esta ruta es correcta
+import { SupermercadosService } from '../../Services/supermercados.service';
 
 @Component({
   selector: 'app-supermercados',
@@ -8,7 +8,9 @@ import { SupermercadosService } from '../../Services/supermercados.service'; // 
 })
 export class SupermercadosComponent implements OnInit {
   supermercados: any[] = [];
-  page: number = 1; // Página inicial
+  supermercadoEdit: any = {}; // Objeto para almacenar el supermercado que se está editando
+  page: number = 1; 
+  isModalOpen: boolean = false;
 
   constructor(private supermercadoService: SupermercadosService) {}
 
@@ -27,8 +29,25 @@ export class SupermercadosComponent implements OnInit {
     );
   }
 
-  editSupermercado(supermercado: any): void {
-    // Lógica para editar el supermercado
+  openEditModal(supermercado: any): void {
+    this.supermercadoEdit = { ...supermercado };
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
+  submitEditForm(supermercadoEdit: any): void {
+    this.supermercadoService.editSupermercado(supermercadoEdit.id, supermercadoEdit).subscribe(
+      (response: any) => {
+        console.log('Supermercado editado exitosamente:', response);
+        this.closeModal();
+      },
+      (error: any) => {
+        console.error('Error al editar supermercado:', error);
+      }
+    );
   }
 
   deleteSupermercado(supermercado: any): void {
