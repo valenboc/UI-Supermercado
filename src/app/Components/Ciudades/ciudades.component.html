@@ -1,5 +1,5 @@
 <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-<select>
+<select (change)="onCityChange($event)">
   <option value="" disabled selected>Filtrar</option>
   <option value="todos">Todos</option>
   <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_ciudad">{{ ciudad.Nombre }}</option>

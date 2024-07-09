@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CiudadesService } from '../Services/ciudades.service';
 
@@ -12,6 +13,7 @@ export class ModalComponent implements OnInit {
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveChanges = new EventEmitter<any>();
   ciudades: any[] = [];
+  selectedFile: File | null = null;
 
   constructor(private ciudadesService: CiudadesService) { }
 
@@ -35,7 +37,12 @@ export class ModalComponent implements OnInit {
     this.closeModal.emit();
   }
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   submitForm(): void {
     this.saveChanges.emit(this.supermercadoEdit);
   }
 }
+

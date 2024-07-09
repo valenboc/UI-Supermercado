@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CiudadesService } from '../../Services/ciudades.service';
 
 @Component({
@@ -9,6 +9,8 @@ import { CiudadesService } from '../../Services/ciudades.service';
 export class CiudadesComponent implements OnInit {
   ciudades: any[] = [];
   errorMessage: string = '';
+  
+  @Output() cityChange = new EventEmitter<string>();
 
   constructor(private ciudadesService: CiudadesService) { }
 
@@ -27,5 +29,11 @@ export class CiudadesComponent implements OnInit {
         this.errorMessage = 'Error fetching ciudades. Please try again later.';
       }
     );
+  }
+
+  onCityChange(event: any): void {
+    const selectedCity = event.target.value;
+    this.cityChange.emit(selectedCity);
+    console.log(selectedCity);
   }
 }

@@ -22,6 +22,7 @@ export class SupermercadosComponent implements OnInit {
   page: number = 1; 
   isModalOpen: boolean = false;
   searchTerm: string = '';
+  selectedCity: string = '';
 
   constructor(private supermercadoService: SupermercadosService) {}
 
@@ -42,9 +43,16 @@ export class SupermercadosComponent implements OnInit {
   }
 
   filterSupermercados(): void {
-    this.filteredSupermercados = this.supermercados.filter(supermercado => 
-      supermercado.Nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    this.filteredSupermercados = this.supermercados.filter(supermercado => {
+      const matchesSearchTerm = supermercado.Nombre.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesCity = this.selectedCity === 'todos' || this.selectedCity === '' || supermercado.ciudad.ID_ciudad.toString() === this.selectedCity;
+      return matchesSearchTerm && matchesCity;
+    });
+  }
+
+  onCityChange(cityId: string): void {
+    this.selectedCity = cityId;
+    this.filterSupermercados();
   }
 
   openEditModal(supermercado: any): void {

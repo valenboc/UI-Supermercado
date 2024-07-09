@@ -25,23 +25,38 @@ export class SupermercadosService {
       );
   }
 
-editSupermercado(id: number, supermercadoData: any): Observable<any> {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${token}`
-  });
-
-  const editUrl = `http://127.0.0.1:8000/api/supermercado/update/${id}`;
-
-  console.log('Datos a enviar al servidor:', supermercadoData); 
-
-  return this.http.put<any>(editUrl, supermercadoData, { headers })
-    .pipe(
-      catchError(this.handleError)
-    );
-}
+  createSupermercado(supermercadoData: FormData): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  
+    const createUrl = `http://127.0.0.1:8000/api/supermercado/new`;
+  
+    return this.http.post<any>(createUrl, supermercadoData, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  
+  editSupermercado(id: number, supermercadoData: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+  
+    const editUrl = `http://127.0.0.1:8000/api/supermercado/update/${id}`;
+  
+    console.log('Datos a enviar al servidor:', supermercadoData); 
+  
+    return this.http.put<any>(editUrl, supermercadoData, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
 deleteSupermercado(id: number): Observable<any> {
   const token = localStorage.getItem('authToken');
@@ -54,22 +69,6 @@ deleteSupermercado(id: number): Observable<any> {
   const deleteUrl = `http://127.0.0.1:8000/api/supermercado/delete/${id}`;
 
   return this.http.delete<any>(deleteUrl, { headers })
-    .pipe(
-      catchError(this.handleError)
-    );
-}
-
-createSupermercado(supermercadoData: any): Observable<any> {
-  const token = localStorage.getItem('authToken');
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': `Bearer ${token}`
-  });
-
-  const createUrl = `http://127.0.0.1:8000/api/supermercado/new`;
-
-  return this.http.post<any>(createUrl, supermercadoData, { headers })
     .pipe(
       catchError(this.handleError)
     );
