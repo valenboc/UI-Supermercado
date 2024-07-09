@@ -89,12 +89,12 @@ button:hover {
 .login-text {
   color: #007bff;
   cursor: pointer;
-  transition: color 0.3s ease-in-out; /* Transición suave para el color del texto */
+  transition: color 0.3s ease-in-out;
 }
 
 .login-text:hover {
   text-decoration: underline;
-  color: #0056b3; /* Color del texto al pasar el mouse */
+  color: #0056b3; 
 }
 
 .error-message {

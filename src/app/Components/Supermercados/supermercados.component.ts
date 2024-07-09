@@ -8,6 +8,7 @@ import { SupermercadosService } from '../../Services/supermercados.service';
 })
 export class SupermercadosComponent implements OnInit {
   supermercados: any[] = [];
+  filteredSupermercados: any[] = [];
   supermercadoEdit: any = {
     Nombre: "",
     NIT: "",
@@ -20,6 +21,7 @@ export class SupermercadosComponent implements OnInit {
   isNew: boolean = false;
   page: number = 1; 
   isModalOpen: boolean = false;
+  searchTerm: string = '';
 
   constructor(private supermercadoService: SupermercadosService) {}
 
@@ -31,10 +33,17 @@ export class SupermercadosComponent implements OnInit {
     this.supermercadoService.getSupermercados().subscribe(
       (data: any[]) => {
         this.supermercados = data;
+        this.filteredSupermercados = data;
       },
       (error: any) => {
         console.error('Error al cargar supermercados:', error);
       }
+    );
+  }
+
+  filterSupermercados(): void {
+    this.filteredSupermercados = this.supermercados.filter(supermercado => 
+      supermercado.Nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 

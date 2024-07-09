@@ -1,12 +1,27 @@
 <app-modal *ngIf="isModalOpen" [title]="isNew ? 'Crear Supermercado' : 'Editar Supermercado'" [supermercadoEdit]="supermercadoEdit" (closeModal)="closeModal()" (saveChanges)="submitForm($event)">
 </app-modal>
 
-<div class="add-button-section">
-  <button (click)="openNewModal()" class="btn btn-success add-btn">Agregar</button>
+
+<!-- Contenido del header Dashboard -->
+<div class="header-section">
+  <div class="header-container">
+    <div class="search-container">
+      <input type="text" placeholder="Buscar supermerdado..." [(ngModel)]="searchTerm" (input)="filterSupermercados()" class="search-input">
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+  <div class="header-container">
+    <app-ciudades></app-ciudades>
+    <button (click)="openNewModal()" class="btn add-btn">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
 </div>
 
 <!-- Listado de Supermercados -->
-<div *ngFor="let supermercado of supermercados | paginate: { itemsPerPage: 6, currentPage: page }" class="row-sesion shadow">
+<div *ngFor="let supermercado of filteredSupermercados | paginate: { itemsPerPage: 6, currentPage: page }" class="row-sesion shadow">
   <img *ngIf="supermercado.Logo" [src]="'assets/' + supermercado.Logo" alt="{{ supermercado.Nombre }} Logo">
   <div class="info-container">
     <div class="info">
