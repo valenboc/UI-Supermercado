@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SupermercadosService } from '../../Services/supermercados.service';
+import { SupermercadosService } from '../../Services/supermercados.service'; // Asegúrate de que esta ruta es correcta
 
 @Component({
   selector: 'app-supermercados',
@@ -8,39 +8,30 @@ import { SupermercadosService } from '../../Services/supermercados.service';
 })
 export class SupermercadosComponent implements OnInit {
   supermercados: any[] = [];
-  errorMessage: string = '';
+  page: number = 1; // Página inicial
 
-  constructor(private supermercadosService: SupermercadosService) { }
+  constructor(private supermercadoService: SupermercadosService) {}
 
   ngOnInit(): void {
-    this.fetchSupermercados();
+    this.loadSupermercados();
   }
 
-  fetchSupermercados(): void {
-    this.supermercadosService.getSupermercados().subscribe(
-      data => {
+  loadSupermercados(): void {
+    this.supermercadoService.getSupermercados().subscribe(
+      (data: any[]) => {
         this.supermercados = data;
-        console.log('Supermercados:', this.supermercados);
       },
-      error => {
-        console.error('Error fetching supermercados:', error);
-        this.errorMessage = 'Error fetching supermercados. Please try again later.';
+      (error: any) => {
+        console.error('Error al cargar supermercados:', error);
       }
     );
   }
 
   editSupermercado(supermercado: any): void {
     // Lógica para editar el supermercado
-    console.log('Editando supermercado:', supermercado);
   }
 
   deleteSupermercado(supermercado: any): void {
     // Lógica para eliminar el supermercado
-    console.log('Eliminando supermercado:', supermercado);
-  }
-
-  addSupermercado(): void {
-    // Lógica para agregar un nuevo supermercado
-    console.log('Agregando nuevo supermercado');
   }
 }

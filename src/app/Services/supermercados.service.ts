@@ -25,6 +25,22 @@ export class SupermercadosService {
       );
   }
 
+  editSupermercado(id: number, supermercadoData: any): Observable<any> {
+    const token = localStorage.getItem('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    const editUrl = `http://127.0.0.1:8000/api/supermercado/update/${id}`;
+
+    return this.http.put<any>(editUrl, supermercadoData, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('Client-side error:', error.error.message);

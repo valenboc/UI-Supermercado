@@ -1,40 +1,58 @@
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-<table>
-  <thead>
-    <tr>
-      <th>Logo</th>
-      <th>Nombre</th>
-      <th>NIT</th>
-      <th>Dirección</th>
-      <th>Ciudad</th>
-      <th>Longitud</th>
-      <th>Latitud</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let supermercado of supermercados">
-      <td>
-        <img *ngIf="supermercado.Logo" [src]="'assets/' + supermercado.Logo" alt="{{ supermercado.Nombre }} Logo" width="50" height="50">
-      </td>
-      <td>{{ supermercado.Nombre }}</td>
-      <td>{{ supermercado.NIT }}</td>
-      <td>{{ supermercado.Direccion }}</td>
-      <td>{{ supermercado.ciudad.Nombre }}</td>
-      <td>{{ supermercado.Longitud }}</td>
-      <td>{{ supermercado.Latitud }}</td>
-      
-      <td>
-        <button (click)="editSupermercado(supermercado)">
-          <img src="assets/edit-icon.png" alt="Editar" width="20" height="20">
-        </button>
-        <button (click)="deleteSupermercado(supermercado)">
-          <img src="assets/delete-icon.png" alt="Eliminar" width="20" height="20">
-        </button>
-        <button (click)="addSupermercado()">
-          <img src="assets/add-icon.png" alt="Agregar" width="20" height="20">
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div *ngFor="let supermercado of supermercados | paginate: { itemsPerPage: 6, currentPage: page }" class="row-sesion shadow">
+  <img *ngIf="supermercado.Logo" [src]="'assets/' + supermercado.Logo" alt="{{ supermercado.Nombre }} Logo">
+
+  <div class="info-container">
+    <div class="info">
+      Nombre
+      <br />
+      <span>{{ supermercado.Nombre }}</span>
+    </div>
+  </div>
+
+  <div class="info-container">
+    <div class="info">
+      NIT
+      <br />
+      <span>{{ supermercado.NIT }}</span>
+    </div>
+  </div>
+  
+  <div class="info-container">
+    <div class="info">
+      Dirección
+      <br />
+      <span>{{ supermercado.Direccion }}</span>
+    </div>
+  </div>
+
+  <div class="info-container">
+    <div class="info">
+      Ciudad
+      <br />
+      <span>{{ supermercado.ciudad.Nombre }}</span>
+    </div>
+  </div>
+
+  <div class="info-container">
+    <div class="info">
+      Longitud
+      <br />
+      <span>{{ supermercado.Longitud }}</span>
+    </div>
+  </div>
+
+  <div class="info-container">
+    <div class="info">
+      Latitud
+      <br />
+      <span>{{ supermercado.Latitud }}</span>
+    </div>
+  </div>
+  
+  <div class="icon-container">
+    <i class="fas fa-edit" (click)="editSupermercado(supermercado)"></i>
+    <i class="fas fa-trash" (click)="deleteSupermercado(supermercado)"></i>
+  </div>
+</div>
+
+<pagination-controls (pageChange)="page = $event"></pagination-controls>

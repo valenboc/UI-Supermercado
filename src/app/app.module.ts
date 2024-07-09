@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/Login/login.component';
@@ -11,6 +12,8 @@ import { DashboardComponent } from './Components/Dashboard/dashboard.component';
 import { CiudadesComponent } from './Components/Ciudades/ciudades.component'; 
 import { SupermercadosComponent } from './Components/Supermercados/supermercados.component'; 
 import { AuthGuard } from './Guards/auth.guard';
+
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -28,13 +31,15 @@ const routes: Routes = [
     RegisterComponent,
     DashboardComponent,
     CiudadesComponent,
-    SupermercadosComponent 
+    SupermercadosComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgxPaginationModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

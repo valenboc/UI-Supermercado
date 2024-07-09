@@ -1,7 +1,9 @@
-<div>
+<div class="dashboard-container">
     <h1>Dashboard</h1>
-    <button (click)="logout()">Logout</button>
+    <button (click)="logout()" class="logout-button">Logout</button>
     <app-ciudades></app-ciudades>
-    <app-supermercados></app-supermercados>
+    <div class="supermercados-container">
+      <app-supermercados></app-supermercados>
+    </div>
   </div>
   
