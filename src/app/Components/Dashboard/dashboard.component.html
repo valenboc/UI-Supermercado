@@ -1,9 +1,18 @@
-<div class="dashboard-container">
-    <h1>Dashboard</h1>
-    <button (click)="logout()" class="logout-button">Logout</button>
-    <app-ciudades></app-ciudades>
-    <div class="supermercados-container">
-      <app-supermercados></app-supermercados>
+<div class="dashboard-header">
+  <div class="profile-section">
+    <img src="assets/user-profile.png" alt="Profile Picture" class="profile-picture" (click)="toggleDropdown()">
+    <div class="dropdown-menu" [class.show]="dropdownOpen">
+      <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
     </div>
   </div>
-  
+</div>
+
+<div class="dashboard-container">
+  <h1>Dashboard</h1>
+  <div class="header-section">
+    <app-ciudades></app-ciudades>
+  </div>
+  <div class="supermercados-container">
+    <app-supermercados></app-supermercados>
+  </div>
+</div>

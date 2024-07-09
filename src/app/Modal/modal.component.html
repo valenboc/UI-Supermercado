@@ -14,27 +14,36 @@
         <label for="nit">NIT</label>
         <input type="text" class="form-control" id="nit" [(ngModel)]="supermercadoEdit.NIT" name="nit">
       </div>
-      <div class="form-group">
-        <label for="direccion">Dirección</label>
-        <input type="text" class="form-control" id="direccion" [(ngModel)]="supermercadoEdit.Direccion" name="direccion">
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label for="direccion">Dirección</label>
+          <input type="text" class="form-control" id="direccion" [(ngModel)]="supermercadoEdit.Direccion" name="direccion">
+        </div>
+        <div class="form-group col-half">
+          <label for="idCiudad">ID Ciudad</label>
+          <select class="form-control" id="idCiudad" [(ngModel)]="supermercadoEdit.ID_ciudad" name="idCiudad">
+            <option disabled selected value="">Seleccione una opción</option>
+            <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_ciudad">{{ ciudad.Nombre }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-half">
+          <label for="longitud">Longitud</label>
+          <input type="text" class="form-control" id="longitud" [(ngModel)]="supermercadoEdit.Longitud" name="longitud">
+        </div>
+        <div class="form-group col-half">
+          <label for="latitud">Latitud</label>
+          <input type="text" class="form-control" id="latitud" [(ngModel)]="supermercadoEdit.Latitud" name="latitud">
+        </div>
       </div>
       <div class="form-group">
         <label for="logo">Logo</label>
         <input type="text" class="form-control" id="logo" [(ngModel)]="supermercadoEdit.Logo" name="logo">
       </div>
-      <div class="form-group">
-        <label for="longitud">Longitud</label>
-        <input type="text" class="form-control" id="longitud" [(ngModel)]="supermercadoEdit.Longitud" name="longitud">
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
       </div>
-      <div class="form-group">
-        <label for="latitud">Latitud</label>
-        <input type="text" class="form-control" id="latitud" [(ngModel)]="supermercadoEdit.Latitud" name="latitud">
-      </div>
-      <div class="form-group">
-        <label for="idCiudad">ID Ciudad</label>
-        <input type="text" class="form-control" id="idCiudad" [(ngModel)]="supermercadoEdit.ciudad.ID_ciudad" name="idCiudad">
-      </div>
-      <button type="submit" class="btn btn-primary">Guardar cambios</button>
     </form>
   </div>
 </div>

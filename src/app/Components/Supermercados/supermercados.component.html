@@ -1,6 +1,9 @@
-<!-- supermercados.component.html -->
-<app-modal *ngIf="isModalOpen" [title]="'Editar Supermercado'" [supermercadoEdit]="supermercadoEdit" (closeModal)="closeModal()" (saveChanges)="submitEditForm($event)">
+<app-modal *ngIf="isModalOpen" [title]="isNew ? 'Crear Supermercado' : 'Editar Supermercado'" [supermercadoEdit]="supermercadoEdit" (closeModal)="closeModal()" (saveChanges)="submitForm($event)">
 </app-modal>
+
+<div class="add-button-section">
+  <button (click)="openNewModal()" class="btn btn-success add-btn">Agregar</button>
+</div>
 
 <!-- Listado de Supermercados -->
 <div *ngFor="let supermercado of supermercados | paginate: { itemsPerPage: 6, currentPage: page }" class="row-sesion shadow">

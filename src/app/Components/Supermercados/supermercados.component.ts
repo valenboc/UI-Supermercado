@@ -8,7 +8,16 @@ import { SupermercadosService } from '../../Services/supermercados.service';
 })
 export class SupermercadosComponent implements OnInit {
   supermercados: any[] = [];
-  supermercadoEdit: any = {}; // Objeto para almacenar el supermercado que se está editando
+  supermercadoEdit: any = {
+    Nombre: "",
+    NIT: "",
+    Direccion: "",
+    Logo: "",
+    Longitud: "",
+    Latitud: "",
+    ID_ciudad: ""
+  };
+  isNew: boolean = false;
   page: number = 1; 
   isModalOpen: boolean = false;
 
@@ -30,7 +39,25 @@ export class SupermercadosComponent implements OnInit {
   }
 
   openEditModal(supermercado: any): void {
-    this.supermercadoEdit = { ...supermercado };
+    this.supermercadoEdit = { 
+      ...supermercado,
+      ID_ciudad: supermercado.ciudad.ID_ciudad
+    };
+    this.isNew = false;
+    this.isModalOpen = true;
+  }
+
+  openNewModal(): void {
+    this.supermercadoEdit = {
+      Nombre: "",
+      NIT: "",
+      Direccion: "",
+      Logo: "",
+      Longitud: "",
+      Latitud: "",
+      ID_ciudad: ""
+    };
+    this.isNew = true;
     this.isModalOpen = true;
   }
 
@@ -38,19 +65,44 @@ export class SupermercadosComponent implements OnInit {
     this.isModalOpen = false;
   }
 
-  submitEditForm(supermercadoEdit: any): void {
-    this.supermercadoService.editSupermercado(supermercadoEdit.id, supermercadoEdit).subscribe(
-      (response: any) => {
-        console.log('Supermercado editado exitosamente:', response);
-        this.closeModal();
-      },
-      (error: any) => {
-        console.error('Error al editar supermercado:', error);
-      }
-    );
+  submitForm(supermercadoEdit: any): void {
+    if (this.isNew) {
+      this.supermercadoService.createSupermercado(supermercadoEdit).subscribe(
+        (response: any) => {
+          console.log('Supermercado creado exitosamente:', response);
+          this.closeModal();
+          this.loadSupermercados();
+        },
+        (error: any) => {
+          console.error('Error al crear supermercado:', error);
+        }
+      );
+    } else {
+      this.supermercadoService.editSupermercado(supermercadoEdit.ID_supermercado, supermercadoEdit).subscribe(
+        (response: any) => {
+          console.log('Supermercado editado exitosamente:', response);
+          this.closeModal();
+          this.loadSupermercados();
+        },
+        (error: any) => {
+          console.error('Error al editar supermercado:', error);
+        }
+      );
+    }
   }
 
   deleteSupermercado(supermercado: any): void {
-    // Lógica para eliminar el supermercado
+    const confirmDelete = confirm(`¿Está seguro de que desea eliminar el supermercado ${supermercado.Nombre}?`);
+    if (confirmDelete) {
+      this.supermercadoService.deleteSupermercado(supermercado.ID_supermercado).subscribe(
+        (response: any) => {
+          console.log('Supermercado eliminado exitosamente:', response);
+          this.loadSupermercados();
+        },
+        (error: any) => {
+          console.error('Error al eliminar supermercado:', error);
+        }
+      );
+    }
   }
 }

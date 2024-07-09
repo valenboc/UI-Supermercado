@@ -12,7 +12,6 @@ import { DashboardComponent } from './Components/Dashboard/dashboard.component';
 import { CiudadesComponent } from './Components/Ciudades/ciudades.component'; 
 import { SupermercadosComponent } from './Components/Supermercados/supermercados.component'; 
 import { AuthGuard } from './Guards/auth.guard';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SupermercadosService } from './Services/supermercados.service';
 import { ModalComponent } from './Modal/modal.component';
 
@@ -43,7 +42,6 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forRoot(routes),
     NgxPaginationModule,
-    NgbModule,
   ],
   providers: [SupermercadosService],
   bootstrap: [AppComponent]

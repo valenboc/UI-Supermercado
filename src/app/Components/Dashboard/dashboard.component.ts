@@ -9,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
+  dropdownOpen = false;
   constructor(private authService: AuthService, private router: Router) { }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
 
   ngOnInit() {
   }

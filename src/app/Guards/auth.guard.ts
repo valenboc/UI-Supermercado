@@ -10,6 +10,7 @@ import { AuthService } from '../Services/auth.service';
 
     canActivate(): boolean {
       const token = this.authService.getToken();
+      console.log(token);
       if (token) {
         return true;
       } else {

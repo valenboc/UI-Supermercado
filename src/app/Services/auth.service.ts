@@ -19,15 +19,15 @@ export class AuthService {
       'Accept': 'application/json'
     });
 
-    return this.http.post<any>(this.apiUrlLogin, { email, password }, { headers })
-      .pipe(
-        tap(response => {
-          if (response.access_token) {
-            localStorage.setItem('authToken', response.access_token);
-          }
-        }),
-        catchError(this.handleError)
-      );
+    return this.http.post<any>(this.apiUrlLogin, { email, password }, { headers }).pipe(
+      tap(response => {
+        if (response.access_token) {
+          localStorage.removeItem('authToken'); // Limpiar token anterior si existe
+          localStorage.setItem('authToken', response.access_token); // Guardar nuevo token
+        }
+      }),
+      catchError(this.handleError)
+    );
   }
 
   register(name: string, email: string, password: string, passwordConfirmation: string): Observable<any> {
@@ -49,10 +49,12 @@ export class AuthService {
       'Authorization': `Bearer ${this.getToken()}`
     });
 
-    return this.http.post<any>(this.apiUrlLogout, {}, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.post<any>(this.apiUrlLogout, {}, { headers }).pipe(
+      tap(() => {
+        localStorage.removeItem('authToken'); // Limpiar el token al salir
+      }),
+      catchError(this.handleError)
+    );
   }
 
   getToken(): string | null {
