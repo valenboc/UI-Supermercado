@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   };
 
   errorMessage: string = '';
-
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -29,20 +28,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.errorMessage = '';  // Resetear el mensaje de error
+    this.errorMessage = ''; 
     if (form.valid) {
       const email = this.loginData.email;
       const password = this.loginData.password;
       this.authService.login(email, password)
         .subscribe(
           response => {
-            // Manejar respuesta exitosa aquí
-            console.log('Response:', response);
-            // Redirigir al Dashboard
             this.router.navigate(['/dashboard']);
           },
           error => {
-            // Manejar errores aquí
             console.error('Error in login:', error);
             this.errorMessage = 'Error al iniciar sesión. Verifique sus credenciales.';
           }

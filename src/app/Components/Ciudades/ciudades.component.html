@@ -1,0 +1,4 @@
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<select>
+  <option *ngFor="let ciudad of ciudades" [value]="ciudad.ID_ciudad">{{ ciudad.Nombre }}</option>
+</select>

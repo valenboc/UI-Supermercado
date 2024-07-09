@@ -8,12 +8,17 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './Components/Login/login.component';
 import { RegisterComponent } from './Components/Register/register.component';
 import { DashboardComponent } from './Components/Dashboard/dashboard.component';
+import { CiudadesComponent } from './Components/Ciudades/ciudades.component'; 
+import { SupermercadosComponent } from './Components/Supermercados/supermercados.component'; 
+import { AuthGuard } from './Guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent }
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'ciudades', component: CiudadesComponent, canActivate: [AuthGuard] },
+  { path: 'supermercados', component: SupermercadosComponent, canActivate: [AuthGuard] } 
 ];
 
 @NgModule({
@@ -21,7 +26,9 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    CiudadesComponent,
+    SupermercadosComponent 
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrlLogin = 'http://127.0.0.1:8000/api/auth/user/login';
   private apiUrlRegister = 'http://127.0.0.1:8000/api/auth/user/register';
+  private apiUrlLogout = 'http://127.0.0.1:8000/api/auth/user/logout';
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +19,11 @@ export class AuthService {
       'Accept': 'application/json'
     });
 
-    return this.http.post<any>(`${this.apiUrlLogin}`, { email, password }, { headers })
+    return this.http.post<any>(this.apiUrlLogin, { email, password }, { headers })
       .pipe(
         tap(response => {
-          if (response.token) {
-            localStorage.setItem('authToken', response.token);
+          if (response.access_token) {
+            localStorage.setItem('authToken', response.access_token);
           }
         }),
         catchError(this.handleError)
@@ -41,8 +42,25 @@ export class AuthService {
       );
   }
 
+  logout(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${this.getToken()}`
+    });
+
+    return this.http.post<any>(this.apiUrlLogout, {}, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getToken(): string | null {
     return localStorage.getItem('authToken');
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('authToken');
   }
 
   private handleError(error: HttpErrorResponse) {
