@@ -13,7 +13,7 @@ import { CiudadesComponent } from './Components/Ciudades/ciudades.component';
 import { SupermercadosComponent } from './Components/Supermercados/supermercados.component'; 
 import { AuthGuard } from './Guards/auth.guard';
 import { SupermercadosService } from './Services/supermercados.service';
-import { ModalComponent } from './Modal/modal.component';
+import { ModalComponent } from './Components/Modal/modal.component';
 
 
 

@@ -7,10 +7,10 @@
   margin: auto;
   padding: 20px;
   justify-content: center;
-  align-items: center; /* Alinea verticalmente el contenedor */
-  background-color: #ffffff; /* Fondo blanco */
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Sombra más notable */
-  border-radius: 10px; /* Bordes redondeados */
+  align-items: center; 
+  background-color: #ffffff; 
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); 
+  border-radius: 10px;
 }
 
 .left-panel {
@@ -18,10 +18,10 @@
   max-width: 300px;
   padding: 20px;
   background-color: #ffffff;
-  border-radius: 10px 0 0 10px; /* Bordes redondeados a la izquierda */
+  border-radius: 10px 0 0 10px; 
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra verticalmente los elementos */
+  justify-content: center; 
 }
 
 .left-panel .form-group {
@@ -31,7 +31,7 @@
 .left-panel .form-group label {
   display: block;
   margin-bottom: 5px;
-  color: #333333; /* Color del texto del label */
+  color: #333333; 
 }
 
 .left-panel .form-group input {
@@ -41,22 +41,22 @@
   border: 1px solid #cccccc;
   border-radius: 5px;
   box-sizing: border-box;
-  transition: border-color 0.3s ease-in-out; /* Transición suave para el borde */
+  transition: border-color 0.3s ease-in-out; 
 }
 
 .left-panel .form-group input:focus {
   outline: none;
-  border-color: #007bff; /* Color del borde al enfocar el input */
+  border-color: #007bff; 
 }
 
 .right-panel {
   flex: 1;
   display: flex;
-  justify-content: center; /* Alinea la imagen a la derecha */
-  align-items: center; /* Centra verticalmente la imagen */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para resaltar el contenedor */
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
   border: 1px solid #ccc;
-  border-radius: 0 10px 10px 0; /* Bordes redondeados a la derecha */
+  border-radius: 0 10px 10px 0; 
 }
 
 .right-panel img {
@@ -74,7 +74,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease-in-out; /* Transición suave para el color de fondo del botón */
+  transition: background-color 0.3s ease-in-out; 
 }
 
 button:hover {

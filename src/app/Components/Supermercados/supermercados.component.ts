@@ -101,6 +101,7 @@ export class SupermercadosComponent implements OnInit {
           console.log('Supermercado editado exitosamente:', response);
           this.closeModal();
           this.loadSupermercados();
+          this.supermercadoEdit.Logo = response.supermercado.Logo;
         },
         (error: any) => {
           console.error('Error al editar supermercado:', error);

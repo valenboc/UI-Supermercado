@@ -24,7 +24,7 @@
   background: none;
   padding: 8px;
   font-size: 14px;
-  width: 200px; /* Ajusta el ancho según sea necesario */
+  width: 200px; 
 }
 
 .search-input::placeholder {

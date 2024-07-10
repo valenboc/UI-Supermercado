@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { CiudadesService } from '../Services/ciudades.service';
+import { CiudadesService } from '../../Services/ciudades.service';
 
 @Component({
   selector: 'app-modal',
@@ -37,21 +37,33 @@ export class ModalComponent implements OnInit {
   }
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    const file = event.target.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
+  
+    if (file && allowedTypes.includes(file.type)) {
+      this.selectedFile = file;
+    } else {
+      console.error('Archivo no válido. Selecciona una imagen.');
+      this.selectedFile = null; 
+    }
   }
+  
 
   submitForm(): void {
     const formData = new FormData();
+  
+    formData.append('ID_supermercado', this.supermercadoEdit.ID_supermercado);
     formData.append('Nombre', this.supermercadoEdit.Nombre);
     formData.append('NIT', this.supermercadoEdit.NIT);
     formData.append('Direccion', this.supermercadoEdit.Direccion);
     formData.append('Longitud', this.supermercadoEdit.Longitud);
     formData.append('Latitud', this.supermercadoEdit.Latitud);
     formData.append('ID_ciudad', this.supermercadoEdit.ID_ciudad);
+  
     if (this.selectedFile) {
       formData.append('Logo', this.selectedFile, this.selectedFile.name);
     }
-
+  
     this.saveChanges.emit(formData);
   }
 }

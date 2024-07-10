@@ -40,22 +40,23 @@ export class SupermercadosService {
       );
   }
   
-  editSupermercado(id: number, supermercadoData: any): Observable<any> {
+
+  editSupermercado(id: number, supermercadoData: FormData): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({
-      'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-  
-    const editUrl = `http://127.0.0.1:8000/api/supermercado/update/${id}`;
-  
-    console.log('Datos a enviar al servidor:', supermercadoData); 
-  
-    return this.http.put<any>(editUrl, supermercadoData, { headers })
+
+    const idSupermercado = supermercadoData.get('ID_supermercado') as string;
+    const editUrl = `http://127.0.0.1:8000/api/supermercado/update/${idSupermercado}`;
+
+    return this.http.post<any>(editUrl, supermercadoData, { headers })
       .pipe(
         catchError(this.handleError)
       );
-  }
+}
+
+  
 
 deleteSupermercado(id: number): Observable<any> {
   const token = localStorage.getItem('authToken');
