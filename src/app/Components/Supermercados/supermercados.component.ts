@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { SupermercadosService } from '../../Services/supermercados.service';
 
@@ -123,3 +124,5 @@ export class SupermercadosComponent implements OnInit {
     }
   }
 }
+
+

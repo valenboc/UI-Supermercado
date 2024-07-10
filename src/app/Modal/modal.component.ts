@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CiudadesService } from '../Services/ciudades.service';
 
@@ -42,7 +41,17 @@ export class ModalComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.saveChanges.emit(this.supermercadoEdit);
+    const formData = new FormData();
+    formData.append('Nombre', this.supermercadoEdit.Nombre);
+    formData.append('NIT', this.supermercadoEdit.NIT);
+    formData.append('Direccion', this.supermercadoEdit.Direccion);
+    formData.append('Longitud', this.supermercadoEdit.Longitud);
+    formData.append('Latitud', this.supermercadoEdit.Latitud);
+    formData.append('ID_ciudad', this.supermercadoEdit.ID_ciudad);
+    if (this.selectedFile) {
+      formData.append('Logo', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.saveChanges.emit(formData);
   }
 }
-

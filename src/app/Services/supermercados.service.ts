@@ -43,7 +43,6 @@ export class SupermercadosService {
   editSupermercado(id: number, supermercadoData: any): Observable<any> {
     const token = localStorage.getItem('authToken');
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': `Bearer ${token}`
     });
