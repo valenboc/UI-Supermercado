@@ -5,6 +5,7 @@
     <button (click)="close()">&times;</button>
   </div>
   <div class="modal-body">
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <form (ngSubmit)="submitForm()">
       <div class="form-group">
         <label for="nombre">Nombre</label>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -43,8 +44,15 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           response => {
             console.log('Registro exitoso:', response);
-            this.router.navigate(['/login']).then(() => {
-              this.resetRegisterData();
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Registro exitoso',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate(['/login']).then(() => {
+                this.resetRegisterData();
+              });
             });
           },
           error => {

@@ -1,14 +1,16 @@
 <div class="dashboard-header">
+  <h1>Administrar Supermercados</h1>
   <div class="profile-section">
     <img src="assets/user-profile.png" alt="Profile Picture" class="profile-picture" (click)="toggleDropdown()">
     <div class="dropdown-menu" [class.show]="dropdownOpen">
       <a class="dropdown-item" href="#" (click)="logout()">Logout</a>
     </div>
   </div>
+  
 </div>
 
 <div class="dashboard-container">
-  <h1>Dashboard</h1>
+  <h1>Dashboard</h1> 
   <div class="supermercados-container">
     <app-supermercados></app-supermercados>
   </div>

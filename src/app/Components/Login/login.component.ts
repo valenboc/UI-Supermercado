@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   };
 
   errorMessage: string = '';
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -35,7 +37,14 @@ export class LoginComponent implements OnInit {
       this.authService.login(email, password)
         .subscribe(
           response => {
-            this.router.navigate(['/dashboard']);
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Inicio de sesión exitoso',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.router.navigate(['/dashboard']);
+            });
           },
           error => {
             console.error('Error in login:', error);

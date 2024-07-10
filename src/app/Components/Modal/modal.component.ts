@@ -13,6 +13,7 @@ export class ModalComponent implements OnInit {
   @Output() saveChanges = new EventEmitter<any>();
   ciudades: any[] = [];
   selectedFile: File | null = null;
+  errorMessage: string | null = null;
 
   constructor(private ciudadesService: CiudadesService) { }
 
@@ -27,6 +28,7 @@ export class ModalComponent implements OnInit {
         console.log('Ciudades:', this.ciudades);
       },
       error => {
+        this.errorMessage = 'Error fetching ciudades';
         console.error('Error fetching ciudades:', error);
       }
     );
@@ -39,19 +41,23 @@ export class ModalComponent implements OnInit {
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif', 'image/svg+xml'];
-  
+
     if (file && allowedTypes.includes(file.type)) {
       this.selectedFile = file;
+      this.errorMessage = null; // Clear error message if the file is valid
     } else {
-      console.error('Archivo no válido. Selecciona una imagen.');
+      this.errorMessage = 'Archivo no válido. Selecciona una imagen.';
       this.selectedFile = null; 
     }
   }
-  
 
   submitForm(): void {
+    if (!this.supermercadoEdit.Nombre || !this.supermercadoEdit.NIT || !this.supermercadoEdit.Direccion || !this.supermercadoEdit.Longitud || !this.supermercadoEdit.Latitud || !this.supermercadoEdit.ID_ciudad) {
+      this.errorMessage = 'Todos los campos son obligatorios';
+      return;
+    }
+
     const formData = new FormData();
-  
     formData.append('ID_supermercado', this.supermercadoEdit.ID_supermercado);
     formData.append('Nombre', this.supermercadoEdit.Nombre);
     formData.append('NIT', this.supermercadoEdit.NIT);
@@ -59,11 +65,11 @@ export class ModalComponent implements OnInit {
     formData.append('Longitud', this.supermercadoEdit.Longitud);
     formData.append('Latitud', this.supermercadoEdit.Latitud);
     formData.append('ID_ciudad', this.supermercadoEdit.ID_ciudad);
-  
+
     if (this.selectedFile) {
       formData.append('Logo', this.selectedFile, this.selectedFile.name);
     }
-  
+
     this.saveChanges.emit(formData);
   }
 }

@@ -83,3 +83,8 @@ button.btn-primary:hover {
 .col-half {
   width: 48%;
 }
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}

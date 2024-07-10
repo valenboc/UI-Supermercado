@@ -1,6 +1,6 @@
-
 import { Component, OnInit } from '@angular/core';
 import { SupermercadosService } from '../../Services/supermercados.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-supermercados',
@@ -21,6 +21,7 @@ export class SupermercadosComponent implements OnInit {
   };
   isNew: boolean = false;
   page: number = 1; 
+  itemsPerPage: number = 10; // Número de elementos por página
   isModalOpen: boolean = false;
   searchTerm: string = '';
   selectedCity: string = '';
@@ -36,6 +37,7 @@ export class SupermercadosComponent implements OnInit {
       (data: any[]) => {
         this.supermercados = data;
         this.filteredSupermercados = data;
+        this.page = Math.ceil(this.supermercados.length / this.itemsPerPage);
       },
       (error: any) => {
         console.error('Error al cargar supermercados:', error);
@@ -88,42 +90,101 @@ export class SupermercadosComponent implements OnInit {
       this.supermercadoService.createSupermercado(supermercadoEdit).subscribe(
         (response: any) => {
           console.log('Supermercado creado exitosamente:', response);
-          this.closeModal();
-          this.loadSupermercados();
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Supermercado creado exitosamente',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.closeModal();
+            this.loadSupermercados();
+            this.page = Math.ceil((this.supermercados.length + 1) / this.itemsPerPage); // Redirigir a la última página
+          });
         },
         (error: any) => {
           console.error('Error al crear supermercado:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al crear el supermercado',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         }
       );
     } else {
-      this.supermercadoService.editSupermercado(supermercadoEdit.ID_supermercado, supermercadoEdit).subscribe(
-        (response: any) => {
-          console.log('Supermercado editado exitosamente:', response);
-          this.closeModal();
-          this.loadSupermercados();
-          this.supermercadoEdit.Logo = response.supermercado.Logo;
-        },
-        (error: any) => {
-          console.error('Error al editar supermercado:', error);
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¿Deseas confirmar los cambios?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.supermercadoService.editSupermercado(supermercadoEdit.ID_supermercado, supermercadoEdit).subscribe(
+            (response: any) => {
+              console.log('Supermercado editado exitosamente:', response);
+              Swal.fire({
+                title: '¡Éxito!',
+                text: 'Supermercado editado exitosamente',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                this.closeModal();
+                this.loadSupermercados();
+                this.supermercadoEdit.Logo = response.supermercado.Logo;
+              });
+            },
+            (error: any) => {
+              console.error('Error al editar supermercado:', error);
+              Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al editar el supermercado',
+                icon: 'error',
+                confirmButtonText: 'OK'
+              });
+            }
+          );
         }
-      );
+      });
     }
   }
 
   deleteSupermercado(supermercado: any): void {
-    const confirmDelete = confirm(`¿Está seguro de que desea eliminar el supermercado ${supermercado.Nombre}?`);
-    if (confirmDelete) {
-      this.supermercadoService.deleteSupermercado(supermercado.ID_supermercado).subscribe(
-        (response: any) => {
-          console.log('Supermercado eliminado exitosamente:', response);
-          this.loadSupermercados();
-        },
-        (error: any) => {
-          console.error('Error al eliminar supermercado:', error);
-        }
-      );
-    }
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Deseas eliminar el supermercado ${supermercado.Nombre}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.supermercadoService.deleteSupermercado(supermercado.ID_supermercado).subscribe(
+          (response: any) => {
+            console.log('Supermercado eliminado exitosamente:', response);
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'Supermercado eliminado exitosamente',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              this.loadSupermercados();
+            });
+          },
+          (error: any) => {
+            console.error('Error al eliminar supermercado:', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al eliminar el supermercado',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        );
+      }
+    });
   }
 }
-
-
